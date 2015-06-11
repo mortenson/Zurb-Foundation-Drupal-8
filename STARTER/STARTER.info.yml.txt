@@ -1,0 +1,82 @@
+name: ZURB Foundation Sub-theme Starter
+description: "Custom sub-theme, inherits from the Foundation base theme read <a href=\"http://foundation.zurb.com/docs/index.php\">framework documentation</a>"
+core: 8.x
+type: theme
+engine: twig
+base theme: zurb_foundation
+
+# Image appears on admin/appearance
+screenshot: images/screenshot.png
+
+# Foundation framework stylesheets
+stylesheets:
+  all:
+    # Uncompressed uncomment for dev or as a reference
+    # - css/foundation.min.css
+    - css/custom.css
+    # Uncomment for IE8 Grid support
+    #- css/ie-grid.css
+
+# Foundation JavaScript.
+# These files are all commented out. If you choose to disable the default
+# base theme JS, you will need to uncomment them.
+# If you choose to do this, please make sure that you are either uncommenting
+# the minified foundation.min.js OR the desired uncompressed components, but
+# not both.
+
+scripts:
+  # Foundation framework scripts (minified).
+  - js/foundation.min.js
+
+  # Foundation framework scripts (uncompressed).
+  # Either uncomment these OR uncomment the minified file above.
+  # - js/foundation/foundation.js
+  # - js/foundation/foundation.abide.js
+  # - js/foundation/foundation.alerts.js
+  # - js/foundation/foundation.clearing.js
+  # - js/foundation/foundation.cookie.js
+  # - js/foundation/foundation.dropdown.js
+  # - js/foundation/foundation.forms.js
+  # - js/foundation/foundation.interchange.js
+  # - js/foundation/foundation.joyride.js
+  # - js/foundation/foundation.magellan.js
+  # - js/foundation/foundation.orbit.js
+  # - js/foundation/foundation.placeholder.js
+  # - js/foundation/foundation.reveal.js
+  # - js/foundation/foundation.section.js
+  # - js/foundation/foundation.tooltips.js
+  # - js/foundation/foundation.topbar.js
+
+  # Theme scripts.
+  # This file is empty, just uncomment this line and start editing!
+  # - js/scripts.js
+
+# Regions are output in the page.tpl.php
+
+regions:
+  header: Header
+  help: Help
+  page_top: 'Page top'
+  page_bottom: 'Page bottom'
+  highlighted: Highlighted
+  content: Content
+  sidebar_first: 'Left Sidebar'
+  sidebar_second: 'Right Sidebar'
+  footer_first: 'Footer first column'
+  footer_middle: 'Footer middle column'
+  footer_last: 'Footer last column'
+  footer: Footer
+regions_hidden:
+  page_top: 'Page Top'
+  page_bottom: 'Page bottom'
+
+# Hidden regions
+# regions_hidden[]: Page top
+# regions_hidden[]: Page bottom
+
+settings:
+  status_in_reveal: '0'
+  use_zepto: '1'
+  use_respondjs: '0'
+  disable_base_css: '0'
+  disable_base_js: '0'

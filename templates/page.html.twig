@@ -1,0 +1,144 @@
+<header class="row">
+  {% if linked_site_name or linked_logo %}
+    <div class="large-2 columns">
+      {% if linked_logo %}
+        {{ linked_logo }}
+      {% endif %}
+    </div>
+    <div class="large-4 columns">
+      {% if is_front %}
+        <h1 id="site-name">{{ linked_site_name }}</h1>
+      {% else %}
+        <div id="site-name">{{ linked_site_name }}</div>
+      {% endif %}
+    </div>
+  {% endif %}
+  {% if main_menu_links %}
+    <nav class="large-12 columns">
+      {{ main_menu_links }}
+    </nav>
+  {% endif %}
+</header>
+
+{% if page.header %}
+  <div class="row">
+    <div class="large-12 columns">
+      {{ page.header }}
+    </div>
+  </div>
+{% endif %}
+
+<div class="row">
+  <div class="{{ site_slogan ? 'large-6' : 'large-4 columns large-offset-8' }} columns hide-for-small">
+    {# /*
+      <p>
+      {% if logged_in %}
+        {{ l(t('My Account'), 'user'); }}
+        {{ l(t('Logout'), 'user/logout'); }}
+      {% else %}
+        {{ l(t('Login'), 'user/login', array('attributes' => array('class' => array('large', 'radius', 'button')))); }}
+        {{ l(t('Sign Up'), 'user/register', array('attributes' => array('class' => array('large', 'radius', 'success', 'button')))); }}
+      {% endif %}
+    </p> */
+    #}
+  </div>
+  {% if site_slogan %}
+    <div class="large-6 columns hide-for-small">
+      {{ site_slogan }}
+    </div>
+  {% endif %}
+  {#
+  /*
+<div class="show-for-small">
+  <div class="six mobile-two columns">
+    <p>{{ l(t('Login'), 'user/login', array('attributes' => array('class' => array('radius', 'button')))); }}</p>
+  </div>
+  <div class="six mobile-two columns">
+    <p>{{ l(t('Sign Up'), 'user/register', array('attributes' => array('class' => array('radius', 'success', 'button')))); }}</p>
+  </div>
+</div>
+*/
+#}
+</div>
+
+{% if messages and not zurb_foundation_messages_modal %}
+<div class="l-messages row">
+  <div class="large-12 columns">
+    {{ messages }}
+  </div>
+</div>
+{% endif %}
+
+{% if page.help %}
+<div class="l-help row">
+  <div class="large-12 columns">
+    {{ page.help }}
+  </div>
+</div>
+{% endif %}
+
+<div class="row">
+  <div id="main" class="{{ main_grid }} columns">
+    {% if page.highlighted %}
+      <div class="highlight panel callout">
+        {{ page.highlighted }}
+      </div>
+    {% endif %}
+    <a id="main-content"></a>
+    {% if breadcrumb %} {{ breadcrumb }} {% endif %}
+    {% if title and not is_front %}
+      {{ title_prefix }}
+      <h1 id="page-title" class="title">{{ title }}</h1>
+      {{ title_suffix }}
+    {% endif %}
+
+    {% if tabs %}
+      {{ tabs }}
+      {% if tabs2 %} {{ tabs2 }} {% endif %}
+    {% endif %}
+    {% if action_links %}
+      <ul class="action-links">
+        {{ action_links }}
+      </ul>
+    {% endif %}
+    {{ page.content }}
+  </div>
+  {% if page.sidebar_first %}
+    <div id="sidebar-first" class="{{ sidebar_first_grid }} columns sidebar ">
+      {{ page.sidebar_first }}
+    </div>
+  {% endif %}
+  {% if page.sidebar_second %}
+    <div id="sidebar-second" class="{{ sidebar_sec_grid }} columns sidebar">
+      {{ page.sidebar_second }}
+    </div>
+  {% endif %}
+</div>
+{% if page.footer_first or page.footer_middle or page.footer_last %}
+  <footer class="row">
+    {% if page.footer_first %}
+      <div id="footer-first" class="large-4 columns">
+        {{ page.footer_first }}
+      </div>
+    {% endif %}
+    {% if page.footer_middle %}
+      <div id="footer-middle" class="large-4 columns">
+        {{ page.footer_middle }}
+      </div>
+    {% endif %}
+    {% if page.footer_last %}
+      <div id="footer-last" class="large-4 columns">
+        {{ page.footer_last }}
+      </div>
+    {% endif %}
+  </footer>
+{% endif %}
+<div class="bottom-bar panel">
+  <div class="row">
+    <div class="large-12 columns">
+      {# /*
+    &copy; {{ date('Y') . ' ' . check_plain(site_name) . ' ' . t('All rights reserved.'); }}
+      */ #}
+    </div>
+  </div>
+</div>
