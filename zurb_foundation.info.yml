@@ -7,39 +7,11 @@ engine: twig
 # Image appears on admin/appearance
 screenshot: images/screenshot.jpg
 
-# Foundation framework stylesheets
-stylesheets:
-  all:
-    # Uncompressed uncomment for dev or as a reference
-    # - css/foundation.min.css
-    - css/normalize.css
-    - css/foundation.css
-    # Base theme specific CSS
-    - css/drupal.css
-    - css/app.css
-    # Uncomment for IE8 Grid support
-    #- css/ie-grid.css
-
-scripts:
-  # Foundation framework scripts.
-  - js/foundation/foundation.min.js
-  # Your theme javascript
-  - js/custom/app.js
+libraries:
+ - zurb_foundation/global
 
 # Uncompressed uncomment for development or as a reference
-# scripts[]: js/foundation/foundation.alerts.js
-# scripts[]: js/foundation/foundation.clearing.js
-# scripts[]: js/foundation/foundation.cookie.js
-# scripts[]: js/foundation/foundation.dropdown.js
-# scripts[]: js/foundation/foundation.forms.js
-# scripts[]: js/foundation/foundation.joyride.js
-# scripts[]: js/foundation/foundation.magellan.js
-# scripts[]: js/foundation/foundation.orbit.js
-# scripts[]: js/foundation/foundation.placeholder.js
-# scripts[]: js/foundation/foundation.reveal.js
-# scripts[]: js/foundation/foundation.section.js
-# scripts[]: js/foundation/foundation.tooltips.js
-# scripts[]: js/foundation/foundation.topbar.js
+ # - zurb_foundation/development
 
 # Regions are output in the page.html.twig
 

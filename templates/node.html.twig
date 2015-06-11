@@ -93,10 +93,7 @@
   {% endif %}
 
   {# We hide the comments and links now so that we can render them later. #}
-  {% hide(content.comments) %}
-  {% hide(content.links) %}
-  {% hide(content.field_tags) %}
-  {{ content }}
+  {{ content|without('comments', 'links', 'field_tags') }}
 
   {% if content.field_tags|length and not is_front %}
     {{ content.field_tags }}

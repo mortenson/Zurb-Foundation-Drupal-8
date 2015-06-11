@@ -6,6 +6,10 @@
  * http://foundation.zurb.com/docs/elements.php#panelEx
  */
 function zurb_foundation_status_messages($variables) {
+  if (!isset($variables['display'])) {
+    return '';
+  }
+
   $display = $variables['display'];
   $output = '';
 

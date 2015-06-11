@@ -26,30 +26,18 @@ function zurb_foundation_menu_local_tasks(&$variables) {
  */
 function zurb_foundation_menu_local_task(&$variables) {
   $link = $variables['element']['#link'];
-  $link_text = $link['title'];
+  $link_text = array(
+    '#markup' => $link['title'],
+  );
 
   if (!empty($variables['element']['#active'])) {
     // Add text to indicate active tab for non-visual users.
-    $active = '<span class="visually-hidden">' . t('(active tab)') . '</span>';
-
-    // If the link does not contain HTML already, check_plain() it now.
-    // After we set 'html'=TRUE the link will not be sanitized by l().
-    if (empty($link['localized_options']['html'])) {
-      $link['title'] = check_plain($link['title']);
-    }
-    $link['localized_options']['html'] = TRUE;
-    $link_text = t('!local-task-title!active', array('!local-task-title' => $link['title'], '!active' => $active));
+    $link_text['#suffix'] = '<span class="visually-hidden">' . t('(active tab)') . '</span>';
   }
 
-  $link['localized_options']['attributes']['class'] = array('button', 'secondary');
+  $link['url']->setOption('attributes', array('class' => array('button', 'secondary')));
 
-  if (!empty($link['href'])) {
-    // @todo - remove this once all pages are converted to routes.
-    $a_tag = l($link_text, $link['href'], $link['localized_options']);
-  }
-  else {
-    $a_tag = \Drupal::l($link_text, $link['route_name'], $link['route_parameters'], $link['localized_options']);
-  }
+  $a_tag = \Drupal::l($link_text, $link['url']);
 
   return '<li' . (!empty($variables['element']['#active']) ? ' class="active"' : '') . '>' . $a_tag. "</li>\n";
 }

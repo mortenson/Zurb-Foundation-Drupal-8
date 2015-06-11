@@ -28,21 +28,6 @@ function zurb_foundation_form_alter(&$form, &$form_state, $form_id) {
 }
 
 /**
- * Implementation of theme_form_element_label().
- * @param $variables
- * @return string
- */
-function zurb_foundation_form_element_label($variables) {
-  if (!empty($variables['element']['#title'])) {
-    $variables['element']['#title'] = '<label>' . $variables['element']['#title'] . '</label>';
-  }
-  if (!empty($variables['element']['#description'])) {
-    $variables['element']['#description'] = ' <span data-tooltip class="has-tip tip-top" data-width="250" title="' . strip_tags($variables['element']['#description']) . '">' . t('More information?') . '</span>';
-  }
-  return theme_form_element_label($variables);
-}
-
-/**
  * Returns an array containing ids of any whitelisted drupal elements.
  * The reason is to provide a list of elements we wish to exclude
  * from certain modifications made by the bootstrap theme which

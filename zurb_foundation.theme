@@ -79,7 +79,7 @@ function zurb_foundation_html_head_alter(&$head_elements) {
 }
 
 /**
- * Implements theme_breadrumb().
+ * Implements theme_breadcrumb().
  *
  * Print breadcrumbs as a list, with separators.
  */
@@ -94,10 +94,13 @@ function zurb_foundation_breadcrumb($variables) {
     $breadcrumbs .= '<ul class="breadcrumbs">';
 
     foreach ($breadcrumb as $key => $value) {
-      $breadcrumbs .= '<li>' . $value . '</li>';
+      $breadcrumbs .= '<li><a href="' . $value['url'] . '">' . $value['text'] . '</a></li>';
     }
 
-    $title = strip_tags(drupal_get_title());
+    $request = \Drupal::request();
+    $route_match = \Drupal::routeMatch();
+    $title = \Drupal::service('title_resolver')->getTitle($request, $route_match->getRouteObject());
+
     $breadcrumbs .= '<li class="current"><a href="#">' . $title. '</a></li>';
     $breadcrumbs .= '</ul>';
 
@@ -319,6 +322,7 @@ function zurb_foundation_preprocess_field(&$variables) {
     }
   }
 }
+
 /**
  * Implements template_preprocess_html().
  *
@@ -340,7 +344,7 @@ function zurb_foundation_preprocess_html(&$variables) {
   #$variables['skip_link'] = \Drupal::l('Skip to main content', '', array('fragment' => 'main-content', 'attributes' => array('class' => array('visually-hidden', 'focusable'))));
 
   // Classes for body element. Allows advanced theming based on context
-  if (!$variables['is_front']) {
+  if (isset($variables['is_front']) && !$variables['is_front']) {
     // Add unique class for each page.
     $path = \Drupal::request()->getRequestUri();
     // Add unique class for each website section.
@@ -446,25 +450,20 @@ function zurb_foundation_preprocess_page(&$variables) {
     $variables['logo_img'] = drupal_render($elements);
   }
 
+  $title = strip_tags($variables['site_name']) . ' ' . t('Home');
+
   $variables['linked_logo']  = '';
   if (!empty($variables['logo_img'])) {
-    $variables['linked_logo'] = \Drupal::l($variables['logo_img'], \Drupal\Core\Url::fromRoute('<front>'), array(
-      'attributes' => array(
-        'rel'   => 'home',
-        'title' => strip_tags($variables['site_name']) . ' ' . t('Home'),
-      ),
-      'html' => TRUE,
-    ));
+    $url = \Drupal\Core\Url::fromRoute('<front>');
+    $url->setOption('attributes', array('title' => $title));
+    $variables['linked_logo'] = \Drupal::l($variables['logo_img'], \Drupal\Core\Url::fromRoute('<front>'));
   }
 
   $variables['linked_site_name'] = '';
   if (!empty($variables['site_name'])) {
-    $variables['linked_site_name'] = \Drupal::l($variables['site_name'], \Drupal\Core\Url::fromRoute('<front>'), array(
-      'attributes' => array(
-        'rel'   => 'home',
-        'title' => strip_tags($variables['site_name']) . ' ' . t('Home'),
-      ),
-    ));
+    $url = \Drupal\Core\Url::fromRoute('<front>');
+    $url->setOption('attributes', array('title' => $title));
+    $variables['linked_site_name'] = \Drupal::l($variables['site_name'], \Drupal\Core\Url::fromRoute('<front>'));
   }
 
   // Site navigation links.

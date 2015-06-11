@@ -1,74 +1,49 @@
 {#
 /**
  * @file
- * Default theme implementation to display the basic html structure of a single
- * Drupal page.
+ * Default theme implementation for the basic structure of a single Drupal page.
  *
  * Variables:
- * - css: An array of CSS files for the current page.
- * - language: (object) The language the site is being displayed in.
- *   language.language contains its textual representation.
- *   language.dir contains the language direction. It will either be 'ltr' or 'rtl'.
- * - grddl_profile: A GRDDL profile allowing agents to extract the RDF data.
- * - head_title: A modified version of the page title, for use in the TITLE
- *   tag.
- * - head_title_array: (array) An associative array containing the string parts
- *   that were used to generate the head_title variable, already prepared to be
- *   output as TITLE tag. The key/value pairs may contain one or more of the
- *   following, depending on conditions:
- *   - title: The title of the current page, if any.
- *   - name: The name of the site.
- *   - slogan: The slogan of the site, if any, and if there is no title.
- * - head: Markup for the HEAD section (including meta tags, keyword tags, and
+ * - logged_in: A flag indicating if user is logged in.
+ * - root_path: The root path of the current page (e.g., node, admin, user).
+ * - node_type: The content type for the current node, if the page is a node.
+ * - css: A list of CSS files for the current page.
+ * - head: Markup for the HEAD element (including meta tags, keyword tags, and
  *   so on).
- * - styles: Style tags necessary to import all CSS files for the page.
+ * - head_title: List of text elements that make up the head_title variable.
+ *   May contain or more of the following:
+ *   - title: The title of the page.
+ *   - name: The name of the site.
+ *   - slogan: The slogan of the site.
+ * - page_top: Initial rendered markup. This should be printed before 'page'.
+ * - page: The rendered page markup.
+ * - page_bottom: Closing rendered markup. This variable should be printed after
+ *   'page'.
+ * - styles: Style tags necessary to import all necessary CSS files in the head.
  * - scripts: Script tags necessary to load the JavaScript files and settings
- *   for the page.
- * - page_top: Initial markup from any modules that have altered the
- *   page. This variable should always be output first, before all other dynamic
- *   content.
- * - page: The rendered page content.
- * - page_bottom: Final closing markup from any modules that have altered the
- *   page. This variable should always be output last, after all other dynamic
- *   content.
- * - classes String of classes that can be used to style contextually through
- *   CSS.
+ *   in the head.
+ * - db_offline: A flag indicating if the database is offline.
  *
- * @see template_preprocess()
  * @see template_preprocess_html()
- * @see template_process()
+ *
+ * @ingroup themeable
  */
 #}
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" {{ html_attributes }}><![endif]-->
-<!--[if gt IE 8]><!--><html {{ html_attributes }}><!--<![endif]-->
+<html{{ html_attributes }}>
 <head>
   {{ head }}
-  <title>{{ head_title }}</title>
-  {% if styles %}
-    {{ styles }}
-  {% endif %}
-  {% if scripts %}
-    {{ scripts }}
-  {% endif %}
+  <title>{{ head_title|safe_join(' | ') }}</title>
+  {{ styles }}
+  {{ scripts }}
 </head>
 <body{{ attributes }}>
-  {% if skip_link %}
-    <div class="skip-link">
-      {{ skip_link }}
-    </div>
-  {% endif %}
-
-  {% if page_top %}
-    {{ page_top }}
-  {% endif %}
-
-  {% if page %}
-    {{ page }}
-  {% endif %}
-
-  {% if page_bottom %}
-    {{ page_bottom }}
-  {% endif %}
+<a href="#main-content" class="visually-hidden focusable">
+  {{ 'Skip to main content'|t }}
+</a>
+{{ page_top }}
+{{ page }}
+{{ page_bottom }}
+{{ scripts_bottom }}
 </body>
 </html>
