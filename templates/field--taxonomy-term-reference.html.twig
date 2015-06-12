@@ -55,7 +55,8 @@
 %}
 {%
   set content_classes = [
-    label_display == 'inline' ? 'links inline' : 'links'
+    label_display == 'inline' ? 'links inline' : 'links',
+    'comma-separated'
   ]
 %}
 <div{{ attributes.addClass(classes) }}>

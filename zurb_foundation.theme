@@ -66,15 +66,18 @@ function zurb_foundation_preprocess_block(&$variables) {
   // Generic block header class.
   $title_class[] = 'block-title';
 
-  // @todo: In the header region visually hide block titles.
-  if ($variables['configuration']['region'] == 'header') {
+  $region = isset($variables['configuration']['region']) ? $variables['configuration']['region'] : '';
+
+  if ($region == 'header') {
     $title_class[] = 'visually-hidden';
   }
 
   // Add a unique class for each block for styling.
-  $variables['attributes']['class'][] = $variables['attributes']['id'];
+  if (isset($variables['attributes']['id'])) {
+    $variables['attributes']['class'][] = $variables['attributes']['id'];
+  }
 
-  switch ($variables['configuration']['region']) {
+  switch ($region) {
     // Add a striping class
     case 'sidebar_first':
     case 'sidebar_second':
@@ -100,11 +103,6 @@ function zurb_foundation_preprocess_field(&$variables) {
     $variables['content_attributes']['class'] = array();
   }
   $variables['title_attributes']['class'][] = 'field-label';
-
-  // Edit classes for taxonomy term reference fields.
-  if ($variables['field_type_css'] == 'taxonomy-term-reference') {
-    $variables['content_attributes']['class'][] = 'comma-separated';
-  }
 
   // Convenience variables
   $name = $variables['element']['#field_name'];
@@ -272,8 +270,6 @@ function zurb_foundation_preprocess_node(&$variables) {
  */
 function zurb_foundation_preprocess_page(&$variables) {
   $path_to_theme = drupal_get_path('theme', 'zurb_foundation');
-
-  drupal_set_message('foo');
 
   // @todo: is this going to be used in D8/F5?
 //  if (theme_get_setting('use_respondjs', 'zurb_foundation')) {
