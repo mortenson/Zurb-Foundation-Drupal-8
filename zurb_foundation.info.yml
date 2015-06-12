@@ -27,7 +27,6 @@ regions:
   footer_first: 'Footer first column'
   footer_middle: 'Footer middle column'
   footer_last: 'Footer last column'
-  footer: Footer
 regions_hidden:
   page_top: 'Page Top'
   page_bottom: 'Page bottom'

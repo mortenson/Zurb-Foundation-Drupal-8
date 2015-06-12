@@ -6,11 +6,7 @@
  * http://foundation.zurb.com/docs/elements.php#panelEx
  */
 function zurb_foundation_status_messages($variables) {
-  if (!isset($variables['display'])) {
-    return '';
-  }
-
-  $display = $variables['display'];
+  $display = $variables['message_list'];
   $output = '';
 
   $status_heading = array(
@@ -25,7 +21,7 @@ function zurb_foundation_status_messages($variables) {
     'warning' => 'secondary'
   );
 
-  foreach (drupal_get_messages($display) as $type => $messages) {
+  foreach ($display as $type => $messages) {
     if (isset($status_mapping[$type])) {
       $output .= "<div data-alert class=\"alert-box radius $status_mapping[$type]\">\n";
     }
@@ -55,12 +51,15 @@ function zurb_foundation_status_messages($variables) {
 
   // Enable Modal Status Messages
   if ($output != '' && theme_get_setting('status_in_reveal', 'zurb_foundation')) {
+    // @todo inline JS has been removed from Drupal 8, we'll have to move this to a library
+    /*
     drupal_add_js("jQuery(document).ready(function() { jQuery('#status-messages').foundation('reveal', 'open');
             });", array('type' => 'inline', 'scope' => 'footer'));
     $output = '<div id="status-messages" class="reveal-modal expand" >'. $output;
     $output .= '<a class="close-reveal-modal">&#215;</a>';
     $output .= "</div>\n";
     $output .= '<div class="reveal-modal-bg"></div>';
+    */
   }
 
   return $output;

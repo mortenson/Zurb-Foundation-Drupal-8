@@ -1,3 +1,67 @@
+{#
+/**
+ * @file
+ * Zurb Foundations's theme implementation to display a single page.
+ *
+ * Available variables:
+ *
+ * General utility variables:
+ * - base_path: The base URL path of the Drupal installation. Will usually be
+ *   "/" unless you have installed Drupal in a sub-directory.
+ * - is_front: A flag indicating if the current page is the front page.
+ * - logged_in: A flag indicating if the user is registered and signed in.
+ * - is_admin: A flag indicating if the user has permission to access
+ *   administration pages.
+ *
+ * Site identity:
+ * - front_page: The URL of the front page. Use this instead of base_path when
+ *   linking to the front page. This includes the language domain or prefix.
+ * - logo: The url of the logo image, as defined in theme settings.
+ * - linked_logo: The logo image, linked to <front>.
+ * - site_name: The name of the site. This is empty when displaying the site
+ *   name has been disabled in the theme settings.
+ * - linked_site_name: The name of the site that also links to <front>.
+ * - site_slogan: The slogan of the site. This is empty when displaying the site
+ *   slogan has been disabled in theme settings.
+ * - hide_site_name: A flag indicating if the site name has been toggled off on
+ *   the theme settings page. If hidden, the "visually-hidden" class is added
+ *   to make the site name visually hidden, but still accessible.
+ * - hide_site_slogan: A flag indicating if the site slogan has been toggled off
+ *   on the theme settings page. If hidden, the "visually-hidden" class is
+ *   added to make the site slogan visually hidden, but still accessible.
+ *
+ * Page content (in order of occurrence in the default page.html.twig):
+ * - title_prefix: Additional output populated by modules, intended to be
+ *   displayed in front of the main title tag that appears in the template.
+ * - title: The page title, for use in the actual content.
+ * - title_suffix: Additional output populated by modules, intended to be
+ *   displayed after the main title tag that appears in the template.
+ * - tabs: Tabs linking to any sub-pages beneath the current page (e.g., the
+ *   view and edit tabs when displaying a node).
+ * - action_links: Actions local to the page, such as "Add menu" on the menu
+ *   administration interface.
+ * - node: Fully loaded node, if there is an automatically-loaded node
+ *   associated with the page and the node ID is the second argument in the
+ *   page's path (e.g. node/12345 and node/12345/revisions, but not
+ *   comment/reply/12345).
+ *
+ * Regions:
+ * - page.header
+ * - page.help
+ * - page.highlighted
+ * - page.content
+ * - page.sidebar_first
+ * - page.sidebar_second
+ * - page.footer_first
+ * - page.footer_middle
+ * - page.footer_last
+ *
+ * @see template_preprocess_page()
+ * @see bartik_preprocess_page()
+ * @see html.html.twig
+ */
+#}
+
 <header class="row">
   {% if linked_site_name or linked_logo %}
     <div class="large-2 columns">
@@ -13,11 +77,6 @@
       {% endif %}
     </div>
   {% endif %}
-  {% if main_menu_links %}
-    <nav class="large-12 columns">
-      {{ main_menu_links }}
-    </nav>
-  {% endif %}
 </header>
 
 {% if page.header %}
@@ -30,35 +89,33 @@
 
 <div class="row">
   <div class="{{ site_slogan ? 'large-6' : 'large-4 columns large-offset-8' }} columns hide-for-small">
-    {# /*
-      <p>
+    <p>
       {% if logged_in %}
-        {{ l(t('My Account'), 'user'); }}
-        {{ l(t('Logout'), 'user/logout'); }}
+        <a href="{{ path('user.page') }}">{{ 'My Account'|t }}</a>
+        <a href="{{ path('user.logout') }}">{{ 'Logout'|t }}</a>
       {% else %}
-        {{ l(t('Login'), 'user/login', array('attributes' => array('class' => array('large', 'radius', 'button')))); }}
-        {{ l(t('Sign Up'), 'user/register', array('attributes' => array('class' => array('large', 'radius', 'success', 'button')))); }}
+        <a href="{{ path('user.login') }}">{{ 'Login'|t }}</a>
+        <a href="{{ path('user.register') }}">{{ 'Sign Up'|t }}</a>
       {% endif %}
-    </p> */
-    #}
+    </p>
   </div>
   {% if site_slogan %}
     <div class="large-6 columns hide-for-small">
       {{ site_slogan }}
     </div>
   {% endif %}
-  {#
-  /*
-<div class="show-for-small">
-  <div class="six mobile-two columns">
-    <p>{{ l(t('Login'), 'user/login', array('attributes' => array('class' => array('radius', 'button')))); }}</p>
+  <div class="show-for-small">
+    <div class="six mobile-two columns">
+      <p>
+        <a href="{{ path('user.login') }}" class="radius button">{{ 'Login'|t }}</a>
+      </p>
+    </div>
+    <div class="six mobile-two columns">
+      <p>
+        <a href="{{ path('user.register') }}" class="radius success button">{{ 'Sign Up'|t }}</a>
+      </p>
+    </div>
   </div>
-  <div class="six mobile-two columns">
-    <p>{{ l(t('Sign Up'), 'user/register', array('attributes' => array('class' => array('radius', 'success', 'button')))); }}</p>
-  </div>
-</div>
-*/
-#}
 </div>
 
 {% if messages and not zurb_foundation_messages_modal %}
@@ -136,9 +193,7 @@
 <div class="bottom-bar panel">
   <div class="row">
     <div class="large-12 columns">
-      {# /*
-    &copy; {{ date('Y') . ' ' . check_plain(site_name) . ' ' . t('All rights reserved.'); }}
-      */ #}
+    &copy; {{ "now"|date('Y') }} {{ site_name }} {{ 'All rights reserved.'|t }}
     </div>
   </div>
 </div>
